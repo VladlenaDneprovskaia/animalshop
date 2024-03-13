@@ -1,0 +1,402 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Tuime - Animal Food Website Template"/>
+    <meta name="keywords" content="accessories, digital products, electronic html, modern, products, responsive"/>
+    <meta name="author" content="hastech"/>
+
+    <title>Магазин корма для животных</title>
+
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600&display=swap"
+          rel="stylesheet">
+
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/pe-icon-7-stroke.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/swiper.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/fancybox.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/ion.rangeSlider.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
+</head>
+
+<body>
+
+<!--wrapper start-->
+<div class="wrapper">
+
+    <!--== Start Preloader Content ==-->
+    <div class="preloader-wrap">
+        <div class="preloader">
+            <div class="dog-head"></div>
+            <div class="dog-body"></div>
+        </div>
+    </div>
+    <!--== End Preloader Content ==-->
+
+    <!--== Start Header Wrapper ==-->
+    <header class="header-area transparent">
+        <div class="container">
+            <div class="row no-gutter align-items-center position-relative">
+                <div class="col-12">
+                    <div class="header-align">
+                        <div class="header-align-start">
+                            <div class="header-logo-area">
+                                <a href="{% url 'home' %}">
+                                    <img class="logo-main" src="{% static 'img/logo-light.webp' %}"
+                                         width="158"
+                                         height="36"
+                                         alt="Logo"/>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="header-align-center">
+                            <div class="header-navigation-area position-relative">
+                                <ul class="main-menu nav">
+                                    <li>
+                                        <a href="{% url 'home' %}">
+                                            <span>Главная</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{% url 'shop:catalog' %}">
+                                            <span>Каталог</span>
+                                        </a>
+                                    </li>
+
+                                    {% if user.is_authenticated %}
+                                        <li>
+                                            <a href="{% url 'cart:home' %}">
+                                                <span>Корзина</span>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="header-align-end">
+                            <div class="header-action-area">
+
+                                <div class="shopping-search">
+                                    <button class="shopping-search-btn"
+                                            type="button"
+                                            data-bs-toggle="offcanvas"
+                                            data-bs-target="#AsideOffcanvasSearch"
+                                            aria-controls="AsideOffcanvasSearch"
+                                    >
+                                        <i class="pe-7s-search icon"></i>
+                                    </button>
+                                </div>
+
+                                {% if user.is_authenticated %}
+                                    <form class="shopping-account d-flex align-items-center gap-2"
+                                          action="{% url 'appauth:logout' %}" method="post">
+                                        {% csrf_token %}
+                                        <span style="color: white">{{ user }}</span>
+                                        <button class="shopping-account-btn d-flex justify-content-center align-items-center"
+                                                style="background: none; border: none; padding: 0">
+                                            <svg fill="#fff" viewBox="0 0 24 24" width="24" height="24"
+                                                 id="sign-out-left-3"
+                                                 data-name="Flat Line" xmlns="http://www.w3.org/2000/svg"
+                                                 class="icon flat-line">
+                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                   stroke-linejoin="round"></g>
+                                                <g id="SVGRepo_iconCarrier">
+                                                    <polyline id="primary" points="6 15 3 12 6 9"
+                                                              style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></polyline>
+                                                    <line id="primary-2" data-name="primary" x1="3" y1="12" x2="17"
+                                                          y2="12"
+                                                          style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></line>
+                                                    <path id="primary-3" data-name="primary"
+                                                          d="M17,20h3a1,1,0,0,0,1-1V5a1,1,0,0,0-1-1H17"
+                                                          style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path>
+                                                </g>
+                                            </svg>
+                                        </button>
+                                    </form>
+
+                                {% else %}
+
+                                    <div class="shopping-account">
+                                        <a class="shopping-account-btn d-flex justify-content-center align-items-center"
+                                           href="{% url 'appauth:login' %}"
+                                        >
+                                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                   stroke-linejoin="round"></g>
+                                                <g id="SVGRepo_iconCarrier">
+                                                    <path d="M18 20.75H15C14.8011 20.75 14.6103 20.671 14.4697 20.5303C14.329 20.3897 14.25 20.1989 14.25 20C14.25 19.8011 14.329 19.6103 14.4697 19.4696C14.6103 19.329 14.8011 19.25 15 19.25H18C18.2969 19.2758 18.5924 19.1863 18.8251 19.0001C19.0579 18.814 19.21 18.5453 19.25 18.25V5.77997C19.21 5.48462 19.0579 5.21599 18.8251 5.0298C18.5924 4.84362 18.2969 4.75415 18 4.77997H15C14.8011 4.77997 14.6103 4.70096 14.4697 4.5603C14.329 4.41965 14.25 4.22889 14.25 4.02997C14.25 3.83106 14.329 3.6403 14.4697 3.49964C14.6103 3.35899 14.8011 3.27997 15 3.27997H18C18.3468 3.26522 18.693 3.31899 19.019 3.43821C19.3449 3.55742 19.6442 3.73974 19.8996 3.97473C20.155 4.20972 20.3616 4.49277 20.5075 4.80768C20.6535 5.12259 20.7359 5.46319 20.75 5.80997V18.22C20.7359 18.5668 20.6535 18.9074 20.5075 19.2223C20.3616 19.5372 20.155 19.8202 19.8996 20.0552C19.6442 20.2902 19.3449 20.4725 19.019 20.5917C18.693 20.711 18.3468 20.7647 18 20.75Z"
+                                                          fill="#fff"></path>
+                                                    <path d="M11 16.75C10.9015 16.7504 10.8038 16.7312 10.7128 16.6934C10.6218 16.6557 10.5393 16.6001 10.47 16.53C10.3296 16.3893 10.2507 16.1987 10.2507 16C10.2507 15.8012 10.3296 15.6106 10.47 15.47L13.94 12L10.47 8.52997C10.3375 8.38779 10.2654 8.19975 10.2688 8.00545C10.2723 7.81115 10.351 7.62576 10.4884 7.48835C10.6258 7.35093 10.8112 7.27222 11.0055 7.26879C11.1998 7.26537 11.3878 7.33749 11.53 7.46997L15.53 11.47C15.6705 11.6106 15.7494 11.8012 15.7494 12C15.7494 12.1987 15.6705 12.3893 15.53 12.53L11.53 16.53C11.4608 16.6001 11.3782 16.6557 11.2872 16.6934C11.1962 16.7312 11.0986 16.7504 11 16.75Z"
+                                                          fill="#fff"></path>
+                                                    <path d="M15 12.75H4C3.80109 12.75 3.61032 12.671 3.46967 12.5303C3.32902 12.3897 3.25 12.1989 3.25 12C3.25 11.8011 3.32902 11.6103 3.46967 11.4697C3.61032 11.329 3.80109 11.25 4 11.25H15C15.1989 11.25 15.3897 11.329 15.5303 11.4697C15.671 11.6103 15.75 11.8011 15.75 12C15.75 12.1989 15.671 12.3897 15.5303 12.5303C15.3897 12.671 15.1989 12.75 15 12.75Z"
+                                                          fill="#fff"></path>
+                                                </g>
+                                            </svg>
+                                        </a>
+                                    </div>
+
+                                {% endif %}
+
+                                {% if user.is_authenticated %}
+                                    <div class="shopping-cart">
+                                        <button class="shopping-cart-btn" type="button" data-bs-toggle="offcanvas"
+                                                data-bs-target="#AsideOffcanvasCart" aria-controls="AsideOffcanvasCart">
+                                            <i class="pe-7s-shopbag icon"></i>
+                                            {% if cart.total_count > 0 %}
+                                                <sup class="shop-count">{{ cart.total_count }}</sup>
+                                            {% endif %}
+                                        </button>
+                                    </div>
+
+                                    <button class="btn-menu" type="button" data-bs-toggle="offcanvas"
+                                            data-bs-target="#AsideOffcanvasMenu" aria-controls="AsideOffcanvasMenu">
+                                        <i class="pe-7s-menu"></i>
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--== End Header Wrapper ==-->
+
+    <main class="main-content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!--== Start Footer Area Wrapper ==-->
+    <footer class="footer-area">
+        <!--== Start Footer Main ==-->
+        <div class="footer-main">
+            <div class="container pt--0 pb--0">
+                <div class="row">
+
+                    <div class="col-md-6 col-lg-3">
+                        <div class="widget-item widget-about">
+                            <h4 class="widget-title">О нас</h4>
+                            <p class="desc">Лучший магазин кормов для ваших питомцев</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3">
+                        <div class="widget-item nav-menu-item1">
+                            <h4 class="widget-title">Аккаунт</h4>
+                            <h4 class="widget-collapsed-title collapsed" data-bs-toggle="collapse"
+                                data-bs-target="#widgetId-1">Information</h4>
+                            <div id="widgetId-1" class="collapse widget-collapse-body">
+                                <div class="collapse-body">
+                                    <div class="widget-menu-wrap">
+                                        <ul class="nav-menu">
+                                            {% if user.is_authenticated %}
+                                                <li><a href="{% url 'cart:home' %}">Корзина</a></li>
+                                                <li>
+                                                    <form method="post" action="{% url 'appauth:logout' %}">
+                                                        {% csrf_token %}
+                                                        <button style="background: none;
+                                                                       color: #e8e8e8;
+                                                                       font-size: 16px;
+                                                                       line-height: 34px;
+                                                                       padding: 0 0;
+                                                                       border:none;
+                                                                       display: block;"
+                                                                type="submit">
+                                                            Выйти
+                                                        </button>
+                                                    </form>
+                                                </li>
+                                            {% else %}
+                                                <li><a href="{% url 'appauth:login' %}">Войти</a></li>
+                                                <li><a href="{% url 'appauth:registration' %}">Регистрация</a></li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--== End Footer Main ==-->
+
+        <!--== Start Footer Bottom ==-->
+        <div class="footer-bottom">
+            <div class="container pt--0 pb--0">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="footer-bottom-content">
+                            <p class="copyright">© 2024 Создано усталыми силами <i class="fa fa-heart"></i> Днепровской
+                                Владленой
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--== End Footer Bottom ==-->
+    </footer>
+    <!--== End Footer Area Wrapper ==-->
+
+    <!--== Scroll Top Button ==-->
+    <div id="scroll-to-top" class="scroll-to-top"><span class="fa fa-angle-up"></span></div>
+
+    <!--== Start Aside Cart ==-->
+    <aside class="aside-cart-wrapper offcanvas offcanvas-end" tabindex="-1" id="AsideOffcanvasCart"
+           aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h1 class="d-none" id="offcanvasRightLabel">Shopping Cart</h1>
+            <button class="btn-aside-cart-close" data-bs-dismiss="offcanvas" aria-label="Close">Корзина<i
+                    class="fa fa-chevron-right"></i></button>
+        </div>
+        <div class="offcanvas-body">
+            {% if cart.total_count > 0 %}
+                <ul class="aside-cart-product-list">
+                    {% for item in cart.items %}
+                        <li class="aside-product-list-item">
+                            <form method="post" action="{% url 'cart:remove' item.product.id %}">
+                                {% csrf_token %}
+                                <button style="display: flex; justify-content: center; align-items: center; background: transparent; cursor: pointer; border: none"
+                                        type="submit" class="remove">×
+                                </button>
+                            </form>
+                            <a href="{% url 'shop:detail' item.product.id %}">
+                                <img src="{{ item.product.images.0.url }}"
+                                     width="90"
+                                     height="110"
+                                     style="max-width: 90px; max-height: 110px; object-fit: contain"
+                                     alt="Image-HasTech">
+                                <span class="product-title">{{ item.name }}</span>
+                            </a>
+                            <span class="product-price">{{ item.count }} × {{ item.product.get_new_price }}р.</span>
+                        </li>
+                    {% endfor %}
+
+                </ul>
+                <p class="cart-total"><span>Сумма: </span><span class="amount">{{ cart.total_price }}р.</span></p>
+                <a class="btn-total" href="{% url 'cart:home' %}">Открыть корзину</a>
+            {% else %}
+                <p class="cart-total"><span class="amount">В корзину ничего не было добавлено</span></p>
+            {% endif %}
+
+        </div>
+    </aside>
+    <!--== End Aside Cart ==-->
+
+    <!--== Start Aside Search Form ==-->
+    <aside class="aside-search-box-wrapper offcanvas offcanvas-top" tabindex="-1" id="AsideOffcanvasSearch"
+           aria-labelledby="offcanvasTopLabel">
+        <div class="offcanvas-header">
+            <h5 class="d-none" id="offcanvasTopLabel">Aside Search</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"><i
+                    class="pe-7s-close"></i></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="container pt--0 pb--0">
+                <div class="search-box-form-wrap">
+                    <div class="search-note">
+                        <p style="text-transform: none">Начните вводить текст и нажмите Enter для поиска</p>
+                    </div>
+                    <form action="{% url 'shop:catalog' %}" method="get">
+                        <div class="search-form position-relative">
+                            <label for="search-input" class="visually-hidden">Поиск</label>
+                            <input id="search-input" type="search" name="search" class="form-control"
+                                   placeholder="Поиск…">
+                            <button class="search-button"><i class="fa fa-search"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <!--== End Aside Search Form ==-->
+
+    <!--== Start Aside Menu ==-->
+    <aside class="off-canvas-wrapper offcanvas offcanvas-start" tabindex="-1" id="AsideOffcanvasMenu"
+           aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h1 class="d-none" id="offcanvasExampleLabel">Aside Menu</h1>
+            <button class="btn-menu-close" data-bs-dismiss="offcanvas" aria-label="Close">Меню <i
+                    class="fa fa-chevron-left"></i></button>
+        </div>
+        <div class="offcanvas-body">
+            <nav id="offcanvasNav" class="offcanvas-menu-nav">
+                <ul>
+                    <li class="offcanvas-nav-parent">
+                        <a class="offcanvas-nav-item" href="{% url 'home' %}">Главная</a>
+                    </li>
+                    <li class="offcanvas-nav-parent">
+                        <a class="offcanvas-nav-item" href="{% url 'shop:catalog' %}">Каталог</a>
+                    </li>
+
+                    {% if user.is_authenticated %}
+                        <li class="offcanvas-nav-parent">
+                            <a class="offcanvas-nav-item" href="{% url 'cart:home' %}">Корзина</a>
+                        </li>
+                        <li class="offcanvas-nav-parent">
+                            <form action="{% url 'appauth:logout' %}" method="post">
+                                {% csrf_token %}
+                                <button style="color: #fff;
+                                               display: block;
+                                               text-transform: capitalize;
+                                               position: relative;
+                                               font-size: 17px;
+                                               font-weight: 400;
+                                               padding: 15px 0;
+                                               border: none;
+                                               background: none;
+                                               line-height: 1;"
+                                        type="submit">Выйти
+                                </button>
+                            </form>
+                        </li>
+
+                    {% else %}
+                        <li class="offcanvas-nav-parent">
+                            <a class="offcanvas-nav-item" href="{% url 'appauth:login' %}">Войти</a>
+                        </li>
+                        <li class="offcanvas-nav-parent">
+                            <a class="offcanvas-nav-item" href="{% url 'appauth:registration' %}">Регистрация</a>
+                        </li>
+                    {% endif %}
+
+                </ul>
+            </nav>
+        </div>
+    </aside>
+
+</div>
+
+<script src="{% static 'js/modernizr.js' %}"></script>
+<script src="{% static 'js/jquery-main.js' %}"></script>
+<script src="{% static 'js/jquery-migrate.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/swiper.min.js' %}"></script>
+<script src="{% static 'js/fancybox.min.js' %}"></script>
+<script src="{% static 'js/countdown.js' %}"></script>
+<script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'js/ion.rangeSlider.min.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,277 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+    <section class="home-slider-area">
+        <div class="swiper home-slider-container default-slider-container">
+            <div class="swiper-wrapper home-slider-wrapper slider-default">
+                <div class="swiper-slide">
+                    <div class="slider-content-area" data-bg-img="{% static 'img/slider/slider-bg.webp' %}">
+                        <div class="container">
+                            <div class="slider-container">
+                                <div class="row justify-content-between align-items-center">
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="slider-content">
+                                            <div class="content">
+                                                <div class="sub-title-box">
+                                                    <h5 class="sub-title">Скидка до 40%</h5>
+                                                </div>
+                                                <div class="title-box">
+                                                    <h2 class="title">Отличный ужин для Вашего питомца</h2>
+                                                </div>
+                                                <div class="btn-box">
+                                                    <a class="btn-theme text-dark" href="{% url 'shop:catalog' %}">Каталог</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="slider-thumb mousemove">
+                                            <div class="thumb">
+                                                <img src="{% static 'img/slider/cat-bg-1.png' %}"
+                                                     width="585"
+                                                     height="579"
+                                                     alt="Image-HasTech">
+
+                                                <div class="shape-one"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <div class="slider-content-two-area" data-bg-img="{% static 'img/slider/dog-bg-1.jpg' %}">
+                        <div class="container">
+                            <div class="slider-container">
+                                <div class="row justify-content-sm-end justify-content-center align-items-center">
+                                    <div class="col-sm-8 col-md-6">
+                                        <div class="slider-content">
+                                            <div class="content">
+                                                <div class="sub-title-box">
+                                                    <h5 class="sub-title">100% Натуральная продукция</h5>
+                                                </div>
+                                                <div class="title-box">
+                                                    <h2 class="title">Эта еда лучшая для Вашего питомца</h2>
+                                                </div>
+                                                <div class="desc-box">
+                                                    <p class="desc">Только качественные ингридиенты, для сохранности
+                                                        здоровья</p>
+                                                </div>
+                                                <div class="btn-box">
+                                                    <a class="btn-theme text-dark" href="{% url 'shop:catalog' %}">Каталог</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="home-overlay"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!--== Add Swiper Arrows ==-->
+            <div class="swiper-btn-wrap">
+                <div class="swiper-btn-prev">
+                    <i class="pe-7s-angle-left"></i>
+                </div>
+                <div class="swiper-btn-next">
+                    <i class="pe-7s-angle-right"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--== End Hero Area Wrapper ==-->
+
+    <!--== Start Product Category Area Wrapper ==-->
+    <section class="product-area product-category-area bg-color-f2">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title shape-center text-center">
+                        <h2 class="title">Категории</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                {% for animal in animals %}
+                    <div class="col">
+                        <div class="product-category-item">
+                            <div class="thumb">
+                                <a href="{% url 'shop:catalog' %}?category={{ animal.id }}">
+                                    <img src="{{ animal.cover.url }}"
+                                         width="200"
+                                         height="200"
+                                         alt="Image-HasTech">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <h3 class="title"><a
+                                        href="{% url 'shop:catalog' %}?category={{ animal.id }}">{{ animal.title }}</a>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!--== End Product Category Area Wrapper ==-->
+
+    <!--== Start Product Banner Area Wrapper ==-->
+    <section class="product-area product-banner-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="banner-product-single-item">
+                        <div class="thumb">
+                            <a href="{% url 'shop:detail' dog_best.id %}">
+                                <img src="{{ dog_best.images.0.url }}"
+                                     width="570" height="300"
+                                     alt="Image-HasTech"
+                                     style="object-fit: contain; max-width: 570px; max-height: 300px"
+                                >
+                            </a>
+                        </div>
+                        <div class="content">
+                            <h5 class="sub-title">{{ dog_best.get_discount_percent|floatformat:0 }}% скидка</h5>
+                            <h5 class="title">{{ dog_best.name }}</h5>
+                            <a href="{% url 'shop:detail' dog_best.id %}" class="btn-theme btn-theme-color btn-sm">Купить</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="banner-product-single-item">
+                        <div class="thumb">
+                            <a href="{% url 'shop:detail' cat_best.id %}">
+                                <img src="{{ cat_best.images.0.url }}"
+                                     width="570" height="300"
+                                     alt="Image-HasTech"
+                                     style="object-fit: contain; max-width: 570px; max-height: 300px">
+                            </a>
+                        </div>
+                        <div class="content">
+                            <h5 class="sub-title">{{ cat_best.get_discount_percent|floatformat:0 }}% скидка</h5>
+                            <h5 class="title">Кошачья еда</h5>
+                            <a href="{% url 'shop:detail' cat_best.id %}" class="btn-theme btn-theme-color btn-sm">Купить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--== End Product Banner Area Wrapper ==-->
+
+    <!--== Start Product Area Wrapper ==-->
+    <section class="product-area product-default-area">
+        <div class="container pt--0">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title mb-45 mb-sm-20 shape-center text-center">
+                        <h5 class="sub-title">Лучший продукт</h5>
+                        <h2 class="title">Новая коллекция</h2>
+                    </div>
+                    <div class="isotope-filter">
+                        <button class="active" data-filter="*">Все</button>
+                        <button data-filter=".filter_new">Новые</button>
+                        <button data-filter=".filter_on_sall">Со скидкой</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row isotope-grid">
+                {% for product in products %}
+
+                    <div class="col-sm-6 col-lg-3 isotope-item {% if product.is_new %}filter_new{% endif %} {% if product.has_discount %}filter_on_sall{% endif %}">
+                        <!--== Start Product Item ==-->
+                        <div class="product-item">
+                            <div class="product-thumb">
+                                <a href="{% url 'shop:detail' product.id %}">
+                                    <img src="{{ product.images.0.url }}"
+                                         width="270"
+                                         height="320"
+                                         alt="Image-HasTech"
+                                         style="max-font-size: 270px; max-height: 320px; object-fit: contain">
+                                </a>
+                            </div>
+
+                            <div class="product-info">
+                                <h4 class="title">
+                                    <a href="{% url 'shop:detail' product.id %}">{{ product.name }}</a>
+                                </h4>
+                                <div class="prices">
+                                    <span class="price">{{ product.get_new_price }}р.</span>
+                                    {% if product.has_discount %}
+                                        <div>
+                                            <span class="price" style="text-decoration: line-through; color: gray">
+                                                {{ product.get_new_price }}р.
+                                            </span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="product-action">
+                                <div class="product-action-links">
+                                    <button type="button" class="btn-product-cart" data-bs-toggle="modal"
+                                            data-bs-target="#action-CartAddModal">
+                                        <i class="pe-7s-shopbag"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!--== End prPduct Item ==-->
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!--== End Product Area Wrapper ==-->
+
+    <!--== Start Divider Area Wrapper ==-->
+    <section class="bg-theme-color position-relative z-index-1">
+        <div class="container-fluid p--0">
+            <div class="row divider-style1">
+                <div class="col-lg-3 col-xl-4">
+                    <div class="divider-thumb divider-thumb-left">
+                        <img src="{{ best_product.images.0.url }}"
+                             width="351" height="435"
+                             alt="Image-HasTech"
+                             style="max-width: 351px; max-height: 435px; object-fit: contain">
+                        <div class="shape-circle"></div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-4">
+                    <div class="divider-content text-center">
+                        <h5 class="sub-title">Экономия {{ best_product.get_discount_percent|floatformat:'0' }}%</h5>
+                        <h2 class="title">{{ best_product.name }}</h2>
+
+                        <a href="{% url 'shop:detail' best_product.id %}" type="submit" class="btn-theme text-dark">Купить
+                            сейчас</a>
+
+                        <img class="shape-object" src="{% static 'img/shape/object1.webp' %}" width="316"
+                             height="302"
+                             alt="Image-HasTech">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xl-4">
+                    <div class="divider-thumb divider-thumb-right">
+                        <img src="{{ best_product.images.1.url }}"
+                             width="488" height="447"
+                             style="max-height: 447px; max-width: 488px; object-fit: cover"
+                             alt="Image-HasTech">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--== End Divider Area Wrapper ==-->
+
+{% endblock %}

@@ -1,0 +1,187 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+    <!--== Start Page Header Area Wrapper ==-->
+    <div class="page-header-area" data-bg-img="{% static 'img/photos/header-bg.webp' %}">
+        <div class="container pt--0 pb--0">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-header-content">
+                        <h2 class="title">Каталог</h2>
+                        <nav class="breadcrumb-area">
+                            <ul class="breadcrumb">
+                                <li><a href="{% url 'home' %}">Главная</a></li>
+                                <li style="color: #0b0b0b" class="breadcrumb-sep">//</li>
+                                <li style="color: #0b0b0b">Каталог</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End Page Header Area Wrapper ==-->
+
+    <!--== Start Product Area Wrapper ==-->
+    <section class="product-area">
+        <div class="container">
+
+
+            <div class="row justify-content-between">
+                <div class="col-xl-9">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-grid" role="tabpanel"
+                                     aria-labelledby="nav-grid-tab">
+                                    <div class="row">
+                                        {% if product_list|length == 0 %}
+                                            <p>Ничего не найдено по данному запросу</p>
+                                        {% else %}
+                                            {% for product in page_obj.object_list %}
+                                                <div class="col-sm-6 col-xl-4">
+                                                    <!--== Start Product Item ==-->
+                                                    <div class="product-item">
+                                                        <div class="product-thumb">
+                                                            <a href="{% url 'shop:detail' product.id %}">
+                                                                <img src="{{ product.images.0.url }}"
+                                                                     width="270"
+                                                                     height="320"
+                                                                     style="max-width: 270px; max-height: 320px; object-fit: contain"
+                                                                     alt="Image-HasTech">
+                                                            </a>
+                                                        </div>
+                                                        <div class="product-info">
+                                                            <h4 class="title"><a
+                                                                    href="{% url 'shop:detail' product.id %}">{{ product.name }}</a>
+                                                            </h4>
+                                                            <div class="prices">
+                                                                <span class="price">{{ product.get_new_price }}р.</span>
+                                                                {% if product.has_discount %}
+                                                                    <div>
+                                                                    <span class="price"
+                                                                          style="color: gray; text-decoration: line-through">
+                                                                        {{ product.get_old_price }}р.
+                                                                    </span>
+                                                                    </div>
+                                                                {% endif %}
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="product-action">
+
+                                                            <div class="product-action-links">
+                                                                <button type="button" class="btn-product-cart"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#action-CartAddModal">
+                                                                    <i class="pe-7s-shopbag"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--== End prPduct Item ==-->
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+
+                                        {% if is_paginated %}
+                                            <div class="col-12">
+                                                <div class="pagination-items pagination-items-style1">
+                                                    <ul class="pagination mb--0">
+                                                        {% if page_obj.has_previous %}
+                                                            <li>
+                                                                <a href="?page={{ page_obj.previous_page_number }}&{{ queries }}"
+                                                                   class="icon">
+                                                                    <i class="fa fa-angle-left"></i>
+                                                                </a>
+                                                            </li>
+                                                        {% endif %}
+
+                                                        {% for page_num in page_obj.paginator.page_range %}
+                                                            {% if page_num == page_obj.number %}
+                                                                <li><a class="active" href="#">{{ page_num }}</a></li>
+                                                            {% else %}
+                                                                <li>
+                                                                    <a href="?page={{ page_num }}&{{ queries }}">{{ page_num }}</a>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% endfor %}
+
+                                                        {% if page_obj.has_next %}
+                                                            <li>
+                                                                <a href="?page={{ page_obj.next_page_number }}&{{ queries }}"
+                                                                   class="icon">
+                                                                    <i class="fa fa-angle-right"></i>
+                                                                </a>
+                                                            </li>
+                                                        {% endif %}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="shop-sidebar">
+                        <div class="shop-sidebar-search">
+                            <div class="sidebar-search-form">
+                                <form method="get">
+                                    <input type="search" name="search" placeholder="Поиск">
+                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                        <form method="get">
+
+                            <div class="shop-widget shop-sidebar-price-range">
+                                <h4 class="sidebar-title">Цена</h4>
+                                <div class="sidebar-price-range">
+                                    {{ filter_form.price_range }}
+                                </div>
+                            </div>
+
+                            <div class="shop-widget shop-sidebar-price-range">
+                                <h4 class="sidebar-title">Вес</h4>
+                                <div class="sidebar-price-range">
+                                    {{ filter_form.weight_range }}
+                                </div>
+                            </div>
+
+                            <div class="shop-widget shop-sidebar-category">
+                                <h4 class="sidebar-title">Категории</h4>
+                                <div class="sidebar-category">
+                                    {{ filter_form.category }}
+                                </div>
+                            </div>
+
+                            <div class="shop-widget shop-sidebar-category">
+                                <h4 class="sidebar-title">Бренды</h4>
+                                <div class="sidebar-category">
+                                    {{ filter_form.brand }}
+                                </div>
+                            </div>
+
+                            <div class="shop-widget shop-sidebar-category">
+                                <h4 class="sidebar-title">Скидка</h4>
+                                <div class="sidebar-category">
+                                    {{ filter_form.has_discount }}
+                                    <label for="{{ filter_form.has_discount.id_for_label }}">Товары со скидкой</label>
+                                </div>
+                            </div>
+
+                            <button class="button btn-theme btn-theme-color mt-3" type="submit">Применить</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

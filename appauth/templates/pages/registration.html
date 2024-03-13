@@ -1,0 +1,98 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="page-header-area" data-bg-img="{% static 'img/photos/header-bg.webp' %}">
+        <div class="container pt--0 pb--0">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-header-content">
+                        <h2 class="title">Регистрация</h2>
+                        <nav class="breadcrumb-area">
+                            <ul class="breadcrumb">
+                                <li>
+                                    <a href="{% url 'home' %}">Главная</a>
+                                </li>
+                                <li style="color: #0b0b0b" class="breadcrumb-sep">//</li>
+                                <li style="color: #0b0b0b">Регистрация</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="account-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="register-form-content">
+                        <form method="post">
+                            {% csrf_token %}
+
+                            {% if form.errors %}
+                                {% for field in form %}
+                                    <ul class="m-0">
+                                        {% for error in field.errors %}
+                                            <li>
+                                                {{ error|escape }}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+
+                                {% endfor %}
+                            {% endif %}
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="{{ form.username.id_for_label }}">
+                                            Логин <span class="required">*</span>
+                                        </label>
+                                        {{ form.username }}
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="{{ form.password1.id_for_label }}">
+                                            Пароль <span class="required">*</span>
+                                        </label>
+                                        {{ form.password1 }}
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="{{ form.password2.id_for_label }}">
+                                            Повторите пароль <span class="required">*</span>
+                                        </label>
+                                        {{ form.password2 }}
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group mb--0">
+                                        <button class="btn-register" type="submit">Регистрация</button>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mt-3">
+                                    <div class="form-group account-info-group mb--0">
+                                        <a class="lost-password" href="{% url 'appauth:login' %}">
+                                            Уже есть аккаунт? Войдите!
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
